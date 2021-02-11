@@ -7,7 +7,7 @@
     - Instruction to run: 
         - `Extract(Trackname, Artist Name)`
         - `Extract("Shap of U", 'Ed')`
-    - Execution time for one valid song: 6.96sec
+    - Execution time for one valid song: 78.7sec
 
 2. Lyric_Extraction_WithoutGoogleSearch.ipynb
     - This function generates the genius url for the song by doing some minimal preprocessing on artist and track names.
@@ -16,4 +16,4 @@
     - Instruction to run: 
         - `Extract(Trackname, Artist Name)`
         - `Extract('Shape Of You', 'Ed Sheeran')`
-    - Execution time for one valid song: 5.43sec
+    - Execution time for 10 valid songs: 44.47sec
