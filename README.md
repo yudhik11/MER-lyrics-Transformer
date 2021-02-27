@@ -6,6 +6,11 @@ Yudhik Agrawal, Ramaguru Guru Ravi Shanker, Vinoo Alluri
 
 [ArXiv Link](https://arxiv.org/abs/2101.02051)
 
+### Architechture
+
+![Pipeline](ECIR_pipeline.png)
+
+
 ### Citation
 ```
 @article{agrawal2021transformer,
