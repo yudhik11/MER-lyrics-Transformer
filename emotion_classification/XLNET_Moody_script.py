@@ -88,6 +88,8 @@ ending_path = ('%s_%d_bs_%d_adamw_data_%d_lr_%s_%d' %(model, MAX_LEN, batch_size
 save_model_path = "../models/" + ending_path
 if not os.path.exists(save_model_path):
     os.mkdir(save_model_path)
+if not os.path.exists("../logs/"):
+    os.mkdir("../logs/")
 logfile_path = "../logs/" + ending_path
 
 # for key in logging.Logger.manager.loggerDict:
