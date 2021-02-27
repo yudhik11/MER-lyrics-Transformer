@@ -12,9 +12,7 @@ import logging
 import os
 import sys
 import numpy as np
-# from Dataset import Dataset
-# sys.path.append(os.path.abspath("../.."))
-# from skimage.io import imread, imsave
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 if torch.cuda.device_count() > 1:
     print("Let's use", torch.cuda.device_count(), "GPUs!")
@@ -63,24 +61,24 @@ df.columns
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--lr', help='Learning Rate', default=2e-5, type=float)
-parser.add_argument('--ne', help='Number of Epochs', default=20, type=int)
+parser.add_argument('--epochs', help='Number of Epochs', default=20, type=int)
 parser.add_argument('--ml', help='Max Len of Sequence', default=1024, type=int)
 parser.add_argument('--bs', help='Batch Size', default=8, type=int)
 parser.add_argument('--ts', help='Test Size', default=0.2, type=float)
-parser.add_argument('--denom', help='Denominator', default='20', type=float)
+parser.add_argument('--adaptive', help='Adaptive LR', default='20', type=float)
 
 args = parser.parse_args()
 
 print(args)
 ## GENERAL Prameters
 lr = args.lr
-num_epochs = args.ne
+num_epochs = args.epochs
 MAX_LEN = args.ml
 batch_size = args.bs
 test_size = args.ts
 model = 'xlnet'
 num_labels = 4
-denom = args.denom
+denom = args.adaptive
 
 ending_path = ('%s_%d_bs_%d_adamw_data_%d_lr_%s_%d' %(model, MAX_LEN, batch_size,(1 - test_size)*100, str(lr).replace("-",""),denom))
 
@@ -147,6 +145,7 @@ for seq in input_ids:
 
 
 # In[16]:
+### Angry = 0, Happy = 1, Relaxed = 2, Sad = 3
 
 
 output_moods = df['Mood_Numeric'].tolist()
@@ -223,20 +222,16 @@ def train(i, denom):
     train_len = 0
     f_acc = 0
     for param_group in optimizer.param_groups:
-        param_group['lr'] = param_group['lr']*(0.1**(i//denom))
+        param_group['lr'] = param_group['lr']*(0.1**(1/denom))
     for step, batch in enumerate(train_dataloader):
-#         print(step)
         batch = tuple(t.to(device) for t in batch)
         b_input_ids, b_input_mask, b_labels = batch
-#         print(b_input_ids.size(), b_input_mask.size(), b_labels.size())
-    #     optimizer.zero_grad()
         optimizer.zero_grad()
         outputs = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask, labels=b_labels)
         pred = outputs[1].detach().cpu().numpy()
         f_acc += flat_accuracy(pred, b_labels)
 
         loss = outputs[0]
-#         loss.backward()
         loss.sum().backward()
         total_loss += outputs[0].sum()
         train_len += b_input_ids.size(0)
@@ -254,10 +249,8 @@ def train(i, denom):
 #            torch.save(model.state_dict(), path)
 
     return train_len*100.0/train_inputs.size(0), i, 100.0, total_loss/train_len, f_acc*100.0/train_len
-# train()
 
 
-# In[25]:
 
 
 def flat_accuracy(preds, labels):
@@ -267,7 +260,6 @@ def flat_accuracy(preds, labels):
     return np.sum(pred_flat == labels_flat)
 
 
-# In[26]:
 
 
 def eval(i):
@@ -279,10 +271,8 @@ def eval(i):
         for step, batch in enumerate(validation_dataloader):
             batch = tuple(t.cuda() for t in batch)
             b_input_ids, b_input_mask, b_labels = batch
-#             print(b_input_ids.size(), b_input_mask.size(), b_labels.size())
             optimizer.zero_grad()
             outputs = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask, labels=b_labels)
-#             print(outputs)
             pred = outputs[1].detach().cpu().numpy()
             f_acc += flat_accuracy(pred, b_labels)
             val_len += b_input_ids.size(0)
@@ -293,10 +283,8 @@ def eval(i):
             
     return (val_len*100.0/validation_inputs.size(0),i,100.0,total_loss/val_len,f_acc*100.0/val_len)
 
-#eval()
 
 
-# In[27]:
 logging.info("Training Started!")
 
 for i in range(num_epochs):
