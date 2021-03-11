@@ -5,7 +5,7 @@
         -`pip install -r requirements.txt`, or `pip3 install -r requirements.txt`
 
 2. Instructions to Run the code:
-    - Expected to provide the path to moody lyrics dataset or any required dataset in line 50, assign list of lyrics to the variable songs in line 111 and numeral mood categories in line 151. 
+    - Expected to provide the path to moody lyrics dataset or any required dataset in line 102, assign list of lyrics to the variable songs in line 106 and numeral mood categories in line 142. 
     - `python3 --lr lr --epochs epochs --ml max_len --bs batch_size --ts test_size --adaptive alr run.py`
     where,
         - lr is the learning rate(in the range of e-5, 2e-5) 
