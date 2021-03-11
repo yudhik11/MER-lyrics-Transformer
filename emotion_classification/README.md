@@ -17,5 +17,5 @@
             - for given alr = 40, the adaptive rate function would be `f(lr,ith epoch) = lr*(0.1)^(i/40)`
     - All the statements will be printed in a file in logs directory named according to the parameters(xlnet_maxlen_bs_batchsize_adamw_data_trainsize_lr_learningrate_adaptiveratedenominator).
 
-Eg: `python3 --lr 2e-5 --epochs 10 --ml 1024 --bs 8 --ts 0.2 --adaptive 20 run.py`
+Eg: `python3 run.py --lr 2e-5 --epochs 10 --ml 1024 --bs 8 --ts 0.2 --adaptive 20`
 will generate a log file named `xlnet_1024_bs_8_adamw_data_80_lr_2e5_20` in the ../logs directory.
