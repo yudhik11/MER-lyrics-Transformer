@@ -4,7 +4,7 @@ Official Repository of "Transformer-based approach towards music emotion recogni
 
 Yudhik Agrawal, Ramaguru Guru Ravi Shanker, Vinoo Alluri
 
-[ArXiv Link](https://arxiv.org/abs/2101.02051)
+[Proceeding Link](https://link.springer.com/chapter/10.1007%2F978-3-030-72240-1_12)
 
 ### Architechture
 
@@ -13,10 +13,17 @@ Yudhik Agrawal, Ramaguru Guru Ravi Shanker, Vinoo Alluri
 
 ### Citation
 ```
-@article{agrawal2021transformer,
-  title={Transformer-based approach towards music emotion recognition from lyrics},
-  author={Agrawal, Yudhik and Shanker, Ramaguru Guru Ravi and Alluri, Vinoo},
-  journal={arXiv preprint arXiv:2101.02051},
-  year={2021}
+@InProceedings{10.1007/978-3-030-72240-1_12,
+  author="Agrawal, Yudhik
+  and Shanker, Ramaguru Guru Ravi
+  and Alluri, Vinoo",
+  title="Transformer-Based Approach Towards Music Emotion Recognition from Lyrics",
+  booktitle="Advances in  Information Retrieval",
+  year="2021",
+  publisher="Springer International Publishing",
+  address="Cham",
+  pages="167--175",
+  isbn="978-3-030-72240-1"
 }
+
 ```
